@@ -44,8 +44,7 @@ public class ReplyDAOImpl implements ReplyDAO {
   }
 
   @Override
-  public List<ReplyVO> listPage(Integer bno, Criteria cri)
-      throws Exception {
+  public List<ReplyVO> listPage(Integer bno, Criteria cri) throws Exception {
 
     Map<String, Object> paramMap = new HashMap<>();
 
@@ -59,5 +58,14 @@ public class ReplyDAOImpl implements ReplyDAO {
   public int count(Integer bno) throws Exception {
 
     return session.selectOne(namespace + ".count", bno);
+
   }
+
+  @Override
+  public int getBno(Integer rno) throws Exception {
+
+    return session.selectOne(namespace + ".getBno", rno);
+  }
+  
+  
 }
