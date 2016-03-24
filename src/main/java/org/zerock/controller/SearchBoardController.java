@@ -112,12 +112,12 @@ public class SearchBoardController {
   }
   
   
-  @RequestMapping("/getAttach/{bno}")
-  @ResponseBody
-  public List<String> getAttach(@PathVariable("bno")Integer bno)throws Exception{
-    
-    return service.getAttach(bno);
-  }  
+//  @RequestMapping("/getAttach/{bno}")
+//  @ResponseBody
+//  public List<String> getAttach(@PathVariable("bno")Integer bno)throws Exception{
+//    
+//    return service.getAttach(bno);
+//  }  
 
   // @RequestMapping(value = "/list", method = RequestMethod.GET)
   // public void listPage(@ModelAttribute("cri") SearchCriteria cri,
