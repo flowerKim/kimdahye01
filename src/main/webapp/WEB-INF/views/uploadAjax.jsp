@@ -18,6 +18,7 @@ small {
 	margin-left: 3px;
 	font-weight: bold;
 	color: gray;
+	cursor:pointer;
 }
 </style>
 </head>
@@ -56,8 +57,6 @@ small {
 				  type: 'POST',
 				  success: function(data){
 					  
-					  alert(data);
-					  /* 
 					  var str ="";
 					  
 					  if(checkImageType(data)){
@@ -71,14 +70,13 @@ small {
 					  }
 					  
 					  $(".uploadedList").append(str);
-			*/
 				  }
 				});	
 		});
 
-/* 
+
 		$(".uploadedList").on("click", "small", function(event){
-			
+			 
 				 var that = $(this);
 			
 			   $.ajax({
@@ -93,7 +91,7 @@ small {
 				   }
 			   });
 		});
-		 */
+		
 		
 /* 		
 $(".fileDrop").on("drop", function(event) {
@@ -137,7 +135,7 @@ $(".fileDrop").on("drop", function(event) {
 		});			
 });	 */
 
-/* 
+
 function getOriginalName(fileName){	
 
 	if(checkImageType(fileName)){
@@ -161,7 +159,7 @@ function getImageLink(fileName){
 	return front + end;
 	
 }
- */
+
 
 
 
@@ -193,14 +191,14 @@ function getImageLink(fileName){
 			
 		}); */
 		
-/* 
+
 	function checkImageType(fileName){
 		
 		var pattern = /jpg|gif|png|jpeg/i;
 		
 		return fileName.match(pattern);
 		
-	} */
+	}
 		
 		
 	</script>

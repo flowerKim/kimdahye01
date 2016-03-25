@@ -35,14 +35,14 @@ public class UploadController {
 
   @RequestMapping(value = "/uploadForm", method = RequestMethod.GET)
   public void uploadForm() {
-    logger.info("uploadForm GET");
   }
 
   @RequestMapping(value = "/uploadForm", method = RequestMethod.POST)
   public String uploadForm(MultipartFile file, Model model) throws Exception {
-    System.out.println("originalName: " + file.getOriginalFilename());
-    System.out.println("size: " + file.getSize());
-    System.out.println("contentType: " + file.getContentType());
+
+    logger.info("originalName: " + file.getOriginalFilename());
+    logger.info("size: " + file.getSize());
+    logger.info("contentType: " + file.getContentType());
 
     String savedName = uploadFile(file.getOriginalFilename(), file.getBytes());
 
@@ -50,18 +50,21 @@ public class UploadController {
 
     return "uploadResult";
   }
-  
-  private String uploadFile(String originalName, byte[] fileData)throws
-  Exception{
+
+  @RequestMapping(value = "/uploadAjax", method = RequestMethod.GET)
+  public void uploadAjax() {
+  }
+
+  private String uploadFile(String originalName, byte[] fileData) throws Exception {
 
     UUID uid = UUID.randomUUID();
-  
-    String savedName = uid.toString() + "_"+ originalName;
-  
-    File target = new File(uploadPath,savedName);
-  
+
+    String savedName = uid.toString() + "_" + originalName;
+
+    File target = new File(uploadPath, savedName);
+
     FileCopyUtils.copy(fileData, target);
-  
+
     return savedName;
 
   }
@@ -71,24 +74,18 @@ public class UploadController {
                   produces = "text/plain;charset=UTF-8")
   public ResponseEntity<String> uploadAjax(MultipartFile file)throws Exception{
     
-    //logger.info("originalName: " + file.getOriginalFilename());
-    System.out.println("originalName: " + file.getOriginalFilename());
-    System.out.println("size: " + file.getSize());
-    System.out.println("contentType: " + file.getContentType());
+    logger.info("originalName: " + file.getOriginalFilename());
+    
    
-/*    return 
+    return 
       new ResponseEntity<>(
           UploadFileUtils.uploadFile(uploadPath, 
                 file.getOriginalFilename(), 
                 file.getBytes()), 
           HttpStatus.CREATED);
-*/
-      return new ResponseEntity<>(file.getOriginalFilename(), HttpStatus.CREATED);
-    
-    }
+  }
   
   
-  /*  
   @ResponseBody
   @RequestMapping("/displayFile")
   public ResponseEntity<byte[]>  displayFile(String fileName)throws Exception{
@@ -134,7 +131,8 @@ public class UploadController {
   @RequestMapping(value="/deleteFile", method=RequestMethod.POST)
   public ResponseEntity<String> deleteFile(String fileName){
     
-    logger.info("delete file: "+ fileName);
+    System.out.println("delete file: "+ fileName);
+//    logger.info("delete file: "+ fileName);
     
     String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
     
@@ -179,7 +177,7 @@ public class UploadController {
       
     }
     return new ResponseEntity<String>("deleted", HttpStatus.OK);
-  }  */
+  }  
 
 }
 //  @ResponseBody
@@ -209,3 +207,17 @@ public class UploadController {
 //
 // }
 //
+// private String uploadFile(String originalName, byte[] fileData)throws
+// Exception{
+//
+// UUID uid = UUID.randomUUID();
+//
+// String savedName = uid.toString() + "_"+ originalName;
+//
+// File target = new File(uploadPath,savedName);
+//
+// FileCopyUtils.copy(fileData, target);
+//
+// return savedName;
+//
+// }
