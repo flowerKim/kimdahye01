@@ -74,7 +74,6 @@
 	<!-- /.row -->
 </section>
 <!-- /.content -->
-</div>
 <!-- /.content-wrapper -->
 
 <script type="text/javascript" src="/resources/js/upload.js"></script>
