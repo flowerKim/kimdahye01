@@ -1,3 +1,6 @@
 # kimdahye01
 
-kkkkkkkk
+
+JQuery 
+½Äº°ÀÚ   
+selector
