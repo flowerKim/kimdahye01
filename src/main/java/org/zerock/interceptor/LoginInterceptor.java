@@ -20,15 +20,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
       HttpServletResponse response, Object handler,
       ModelAndView modelAndView) throws Exception {
     
-    HttpSession session= request.getSession();
+    HttpSession session = request.getSession();
+
     ModelMap modelMap = modelAndView.getModelMap();
     Object userVO = modelMap.get("userVO");
     
    if(userVO != null) {
-     logger.info("new login success");
-     System.out.println("new login success syso");
+     System.out.println("LoginInterceptor new login success");
      session.setAttribute(LOGIN, userVO);
-     response.sendRedirect("/");
+     //response.sendRedirect("/");
+     Object dest = session.getAttribute("dest");
+     response.sendRedirect(dest != null ? (String) dest : "/");
    }
   }
   
@@ -39,8 +41,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     HttpSession session = request.getSession();
     
     if(session.getAttribute(LOGIN) != null) {
-      logger.info("clear login data befor");
-      System.out.println("clear login data befor syso");
+      System.out.println("LoginInterceptor  clear login data befor");
       session.removeAttribute(LOGIN);
     }
     return true;

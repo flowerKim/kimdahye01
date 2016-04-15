@@ -18,19 +18,20 @@ public class UserController {
   
   @Inject
   private UserService service;
-  
-  @RequestMapping(value="/login", method = RequestMethod.GET)
+
+  @RequestMapping(value = "/login", method = RequestMethod.GET)
   public void loginGET(@ModelAttribute("dto") LoginDTO dto) {
-    
+    System.out.println("controller login");
   }
   
-  @RequestMapping(value="/loginPost", method = RequestMethod.POST)
-  public void loginPOST(
-      LoginDTO dto, HttpSession session, Model model) throws Exception {
-
+  @RequestMapping(value = "/loginPost", method = RequestMethod.POST)
+  public void loginPOST(LoginDTO dto, HttpSession session, Model model) throws Exception {
+    System.out.println("controller loginPost");
     UserVO vo = service.login(dto);
     
-    if (vo == null) { return; } 
+    if (vo == null) {
+      return;
+    }
 
     model.addAttribute("userVO", vo);
     

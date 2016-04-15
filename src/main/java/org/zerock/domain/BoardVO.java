@@ -11,6 +11,7 @@ public class BoardVO {
   private Date regdate;
   private int viewcnt;
   private int replycnt;
+  
   private String[] files;
   
 
