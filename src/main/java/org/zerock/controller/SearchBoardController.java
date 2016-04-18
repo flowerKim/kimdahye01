@@ -31,8 +31,7 @@ public class SearchBoardController {
 
   @RequestMapping(value = "/list", method = RequestMethod.GET)
   public void listPage(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {
-
-    logger.info(cri.toString());
+    System.out.println(cri.toString());
 
     // model.addAttribute("list", service.listCriteria(cri));
     model.addAttribute("list", service.listSearchCriteria(cri));
@@ -77,7 +76,7 @@ public class SearchBoardController {
   @RequestMapping(value = "/modifyPage", method = RequestMethod.POST)
   public String modifyPagingPOST(BoardVO board, SearchCriteria cri, RedirectAttributes rttr) throws Exception {
 
-    logger.info(cri.toString());
+    System.out.println(cri.toString());
     service.modify(board);
 
     rttr.addAttribute("page", cri.getPage());
@@ -87,7 +86,7 @@ public class SearchBoardController {
 
     rttr.addFlashAttribute("msg", "SUCCESS");
 
-    logger.info(rttr.toString());
+    System.out.println(rttr.toString());
 
     return "redirect:/sboard/list";
   }
@@ -95,14 +94,14 @@ public class SearchBoardController {
   @RequestMapping(value = "/register", method = RequestMethod.GET)
   public void registGET() throws Exception {
 
-    logger.info("regist get ...........");
+    System.out.println("regist get ...........");
   }
 
   @RequestMapping(value = "/register", method = RequestMethod.POST)
   public String registPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
 
-    logger.info("regist post ...........");
-    logger.info(board.toString());
+    System.out.println("regist post ...........");
+    System.out.println(board.toString());
 
     service.regist(board);
 

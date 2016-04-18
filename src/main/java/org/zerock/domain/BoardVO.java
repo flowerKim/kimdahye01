@@ -1,5 +1,6 @@
 package org.zerock.domain;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class BoardVO {
@@ -81,8 +82,10 @@ public class BoardVO {
 
   @Override
   public String toString() {
-    return "BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
-        + regdate + ", viewcnt=" + viewcnt + ", replycnt=" + replycnt + "]";
+    return "BoardVO [bno=" + bno + ", title=" + title + ", content="
+        + content + ", writer=" + writer + ", regdate=" + regdate
+        + ", viewcnt=" + viewcnt + ", replycnt=" + replycnt
+        + ", files=" + Arrays.toString(files) + "]";
   }
 
 }
