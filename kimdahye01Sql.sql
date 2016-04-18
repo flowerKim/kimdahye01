@@ -73,3 +73,12 @@ insert into tbl_user(uid, upw, uname) values ('user10', 'user10', 'Quick Silver'
 
 
 select bno, title, content, writer, regdate, viewcnt , replycnt from tbl_board where bno = 9; 
+
+--663 page 자동로그인과 쿠키 autologin and cookie 
+alter table tbl_user add column 
+sessionkey varchar(50) not null default 'none';
+
+alter table tbl_user 
+add column sessionlimit timestamp;
+
+
