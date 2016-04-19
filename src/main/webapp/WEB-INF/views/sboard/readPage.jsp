@@ -130,7 +130,7 @@
 		<ul class="timeline">
 		  <!-- timeline time label -->
 		<li class="time-label" id="repliesDiv">
-		  <span class="bg-green">
+		  <span class="bg-green" style="cursor:pointer">
 		    Replies List <small id='replycntSmall'> [ ${boardVO.replycnt} ] </small>
 		    </span>
 		  </li>
@@ -246,6 +246,7 @@ function goLogin() {
     //console.log("bno: " +bno);
     var paramBno = ${param.bno};
     console.log("paramBno: " +paramBno);
+    var bno = ${param.bno};
     //getPage("/replies/" + bno + "/1");
 	var replyPage = 1;
 
@@ -303,6 +304,38 @@ function goLogin() {
 	});
 
 	//////////////////////replyAddBtn   move/////////////////////
+	$("#replyAddBtn").on("click", function() {
+
+        var replyerObj = $("#newReplyWriter");
+        var replytextObj = $("#newReplyText");
+        var replyer = replyerObj.val();
+        var replytext = replytextObj.val();
+
+        $.ajax({
+          type : 'post',
+          url : '/replies/',
+          headers : {
+            "Content-Type" : "application/json",
+            "X-HTTP-Method-Override" : "POST"
+          },
+          dataType : 'text',
+          data : JSON.stringify({
+            bno : bno,
+            replyer : replyer,
+            replytext : replytext
+          }),
+          success : function(result) {
+            console.log("result: " + result);
+            if (result == 'SUCCESS') {
+              alert("등록 되었습니다.");
+              replyPage = 1;
+              getPage("/replies/" + bno + "/" + replyPage);
+              replyerObj.val("");
+              replytextObj.val("");
+            }
+          }
+        });
+      });
 
 	$(".timeline").on("click", ".replyLi", function(event) {
 
@@ -427,7 +460,10 @@ $(document).ready(function(){
 			
 		});
 		
+	        getPage("/replies/" + bno + "/" + 1);
 		
+		
+		/* 
 		$("#replyAddBtn").on("click", function() {
 
 		    var replyerObj = $("#newReplyWriter");
@@ -460,6 +496,9 @@ $(document).ready(function(){
 		      }
 		    });
 		  });
+		*/
+		
+		
 	});
 	
 
