@@ -18,7 +18,6 @@ small {
 	margin-left: 3px;
 	font-weight: bold;
 	color: gray;
-	cursor:pointer;
 }
 </style>
 </head>
@@ -76,7 +75,7 @@ small {
 
 
 		$(".uploadedList").on("click", "small", function(event){
-			 
+			
 				 var that = $(this);
 			
 			   $.ajax({

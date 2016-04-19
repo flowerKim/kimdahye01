@@ -13,17 +13,18 @@ import org.zerock.dto.LoginDTO;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
+	
+	@Inject
+	private SqlSession session;
+	
+	private static String namespace ="org.zerock.mapper.UserMapper";	
 
-  @Inject
-  private SqlSession session;
-  
-  private static String namespace = "org.zerock.mapper.UserMapper";
-  
-  @Override
-  public UserVO login(LoginDTO dto) throws Exception {
-    return session.selectOne(namespace + ".login", dto);
-  }
-
+	@Override
+	public UserVO login(LoginDTO dto) throws Exception {
+		
+		return session.selectOne(namespace +".login", dto);
+	}
+	
   @Override
   public void keepLogin(String uid, String sessionId, Date next) {
 
@@ -40,6 +41,5 @@ public class UserDAOImpl implements UserDAO {
   public UserVO checkUserWithSessionKey(String value) {
 
     return session.selectOne(namespace +".checkUserWithSessionKey", value);
-  } 
-
+  }	
 }

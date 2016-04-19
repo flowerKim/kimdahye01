@@ -131,8 +131,7 @@ public class UploadController {
   @RequestMapping(value="/deleteFile", method=RequestMethod.POST)
   public ResponseEntity<String> deleteFile(String fileName){
     
-    System.out.println("delete file: "+ fileName);
-//    logger.info("delete file: "+ fileName);
+    logger.info("delete file: "+ fileName);
     
     String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
     

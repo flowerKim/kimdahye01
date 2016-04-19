@@ -12,3 +12,9 @@ on tbl_reply.bno = tbl_board.bno;
 select b.bno, b.title, b.content, b.writer, r.bno, r.rno, r.replytext, r.replyer
 from tbl_board b left join tbl_reply r
 on b.bno = r.bno;
+
+
+select count(bno) from tbl_reply
+    where bno =11;
+    
+update tbl_board set replycnt = replycnt + 1 where bno = 3;

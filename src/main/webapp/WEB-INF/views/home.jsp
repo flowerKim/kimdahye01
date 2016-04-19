@@ -3,12 +3,15 @@
 <head>
 	<title>Home</title>
 </head>
+
 <body>
 <h1>
-	Hello world!  
+	
+
 </h1>
 
-<h2>${result }</h2>
-<P>  The time on the server is ${serverTime}. </P>
+
+<h2>${result}</h2>
+
 </body>
 </html>

@@ -14,7 +14,7 @@ import org.zerock.domain.UserVO;
 import org.zerock.service.UserService;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
-  
+
   private static final Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
   
   @Inject
@@ -24,11 +24,12 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
   public boolean preHandle(HttpServletRequest request,
       HttpServletResponse response, Object handler) throws Exception {
     
-    HttpSession session = request.getSession();
-    
+    HttpSession session = request.getSession();   
+
+
     if(session.getAttribute("login") == null){
-      
-     System.out.println("current user is not logined");
+    
+      logger.info("current user is not logined");
       
       saveDest(request);
       
@@ -38,7 +39,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         
         UserVO userVO = service.checkLoginBefore(loginCookie.getValue());
         
-        System.out.println("USERVO: " + userVO);
+        logger.info("USERVO: " + userVO);
         
         if(userVO != null){
           session.setAttribute("login", userVO);
@@ -52,7 +53,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     }
     return true;
   }  
-
+  
 
   private void saveDest(HttpServletRequest req) {
 
@@ -67,11 +68,32 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     }
 
     if (req.getMethod().equals("GET")) {
-      System.out.println("dest: " + (uri + query));
+      logger.info("dest: " + (uri + query));
       req.getSession().setAttribute("dest", uri + query);
     }
-  }   
+  }
 
-  
-  
+//  @Override
+//  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+//
+//    HttpSession session = request.getSession();
+//
+//    if (session.getAttribute("login") == null) {
+//
+//      logger.info("current user is not logined");
+//
+//      saveDest(request);
+//      
+//      response.sendRedirect("/user/login");
+//      return false;
+//    }
+//    return true;
+//  }
 }
+
+// if(session.getAttribute("login") == null){
+//
+// logger.info("current user is not logined");
+// response.sendRedirect("/user/login");
+// return false;
+// }

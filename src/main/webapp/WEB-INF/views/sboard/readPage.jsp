@@ -2,46 +2,31 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>   
 
 <%@include file="../include/header.jsp"%>
 <script type="text/javascript" src="/resources/js/upload.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 <!-- Main content -->
-<style type="text/css">
-.popup {
-	position: absolute;
-}
+    <style type="text/css">
+    .popup {position: absolute;}
+    .back { background-color: gray; opacity:0.5; width: 100%; height: 300%; overflow:hidden;  z-index:1101;}
+    .front { 
+       z-index:1110; opacity:1; boarder:1px; margin: auto; 
+      }
+     .show{
+       position:relative;
+       max-width: 1200px; 
+       max-height: 800px; 
+       overflow: auto;       
+     } 
+  	
+    </style>
 
-.back {
-	background-color: gray;
-	opacity: 0.5;
-	width: 100%;
-	height: 300%;
-	overflow: hidden;
-	z-index: 1101;
-}
-
-.front {
-	z-index: 1110;
-	opacity: 1;
-	boarder: 1px;
-	margin: auto;
-}
-
-.show {
-	position: relative;
-	max-width: 1200px;
-	max-height: 800px;
-	overflow: auto;
-}
-</style>
-
-<div class='popup back' style="display: none;"></div>
-<div id="popup_front" class='popup front' style="display: none;">
-	<img id="popup_img">
-</div>
+    <div class='popup back' style="display:none;"></div>
+    <div id="popup_front" class='popup front' style="display:none;">
+     <img id="popup_img">
+    </div>
 
 <section class="content">
 	<div class="row">
@@ -82,22 +67,19 @@
 					</div>
 				</div>
 				<!-- /.box-body -->
+				
+  <div class="box-footer">
+    
+    <div><hr></div>
 
-				<div class="box-footer">
-
-					<div>
-						<hr>
-					</div>
-
-					<ul class="mailbox-attachments clearfix uploadedList">
-					</ul>
-					<c:if test="${login.uid == boardVO.writer}">
-						<button type="submit" class="btn btn-warning" id="modifyBtn">Modify</button>
-						<button type="submit" class="btn btn-danger" id="removeBtn">REMOVE</button>
-					</c:if>
-					<button type="submit" class="btn btn-primary" id="goListBtn">GO
-						LIST</button>
-				</div>
+    <ul class="mailbox-attachments clearfix uploadedList">
+    </ul>
+ <c:if test="${login.uid == boardVO.writer}">
+    <button type="submit" class="btn btn-warning" id="modifyBtn">Modify</button>
+    <button type="submit" class="btn btn-danger" id="removeBtn">REMOVE</button>
+ </c:if>
+    <button type="submit" class="btn btn-primary" id="goListBtn">GO LIST </button>
+  </div>
 
 			</div>
 			<!-- /.box -->
@@ -113,50 +95,47 @@
 		<div class="col-md-12">
 
 
-			<div class="box box-success">
-				<div class="box-header">
-					<h3 class="box-title">ADD NEW REPLY</h3>
-				</div>
+<div class="box box-success">
+  <div class="box-header">
+    <h3 class="box-title">ADD NEW REPLY</h3>
+  </div>
+  
+  
 
 
+  <c:if test="${not empty login}">  
+  <div class="box-body">
+    <label for="exampleInputEmail1">Writer</label>
+    <input class="form-control" type="text" placeholder="USER ID" 
+    	id="newReplyWriter" value="${login.uid }" readonly="readonly">     
+    <label for="exampleInputEmail1">Reply Text</label> 
+    <input class="form-control" type="text" placeholder="REPLY TEXT" id="newReplyText">
+    </div>
+  
+		<div class="box-footer">
+		  <button type="submit" class="btn btn-primary" id="replyAddBtn">ADD REPLY</button>
+		</div>
+  </c:if>
+  
+  <c:if test="${empty login}">
+    <div class="box-body">
+      <div><a href="javascript:goLogin();" >Login Please</a></div>
+    </div>
+  </c:if>				                 
+</div>            
 
 
-				<c:if test="${not empty login}">
-					<div class="box-body">
-						<label for="exampleInputEmail1">Writer</label> <input
-							class="form-control" type="text" placeholder="USER ID"
-							id="newReplyWriter" value="${login.uid }" readonly="readonly">
-						<label for="exampleInputEmail1">Reply Text</label> <input
-							class="form-control" type="text" placeholder="REPLY TEXT"
-							id="newReplyText">
-					</div>
-
-					<div class="box-footer">
-						<button type="submit" class="btn btn-primary" id="replyAddBtn">ADD
-							REPLY</button>
-					</div>
-				</c:if>
-
-				<c:if test="${empty login}">
-					<div class="box-body">
-						<div>
-							<a href="javascript:goLogin();">Login Please</a>
-						</div>
-					</div>
-				</c:if>
-			</div>
-
-
-
-			<!-- The time line -->
-			<ul class="timeline">
-				<!-- timeline time label -->
-				<li class="time-label" id="repliesDiv"><span class="bg-green">
-						Replies List <small id='replycntSmall'> [
-							${boardVO.replycnt} ] </small>
-				</span></li>
-			</ul>
-
+		
+		<!-- The time line -->
+		<ul class="timeline">
+		  <!-- timeline time label -->
+		<li class="time-label" id="repliesDiv">
+		  <span class="bg-green">
+		    Replies List <small id='replycntSmall'> [ ${boardVO.replycnt} ] </small>
+		    </span>
+		  </li>
+		</ul>
+		   
 			<div class='text-center'>
 				<ul id="pagination" class="pagination pagination-sm no-margin ">
 
@@ -169,31 +148,29 @@
 	<!-- /.row -->
 
 
-
-	<!-- Modal -->
-	<div id="modifyModal" class="modal modal-primary fade" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title"></h4>
-				</div>
-				<div class="modal-body" data-rno>
-					<p>
-						<input type="text" id="replytext" class="form-control">
-					</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-info" id="replyModBtn">Modify</button>
-					<button type="button" class="btn btn-danger" id="replyDelBtn">DELETE</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
+          
+<!-- Modal -->
+<div id="modifyModal" class="modal modal-primary fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body" data-rno>
+        <p><input type="text" id="replytext" class="form-control"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" id="replyModBtn">Modify</button>
+        <button type="button" class="btn btn-danger" id="replyDelBtn">DELETE</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>      
+	
+	
 </section>
 <!-- /.content -->
 
@@ -202,17 +179,17 @@
 <li data-src='{{fullName}}'>
   <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
   <div class="mailbox-attachment-info">
-  <a href="{{getLink}}" class="mailbox-attachment-name">{{fileName}}</a>
-  </span>
+	<a href="{{getLink}}" class="mailbox-attachment-name">{{fileName}}</a>
+	</span>
   </div>
 </li>                
-</script>
+</script>  
 
 
-
+          
 <script id="template" type="text/x-handlebars-template">
-        {{#each .}}
-           <li class="replyLi" data-rno={{rno}}>
+				{{#each .}}
+	         <li class="replyLi" data-rno={{rno}}>
              <i class="fa fa-comments bg-blue"></i>
              <div class="timeline-item" >
                 <span class="time">
@@ -220,18 +197,23 @@
                 </span>
                 <h3 class="timeline-header"><strong>{{rno}}</strong> -{{replyer}}</h3>
                 <div class="timeline-body">{{replytext}} </div>
-                <div class="timeline-footer">
-                {{#eqReplyer replyer }}
+								<div class="timeline-footer">
+								{{#eqReplyer replyer }}
                   <a class="btn btn-primary btn-xs" 
-                  data-toggle="modal" data-target="#modifyModal">Modify</a>
-                {{/eqReplyer}}
-                </div>
-              </div>      
+									data-toggle="modal" data-target="#modifyModal">Modify</a>
+								{{/eqReplyer}}
+							  </div>
+	            </div>			
            </li>
         {{/each}}
-</script>
+</script>  
 
 <script>
+function goLogin() {
+	 self.location = "/user/login";
+}
+
+	
 	Handlebars.registerHelper("eqReplyer", function(replyer, block) {
 		var accum = '';
 		if (replyer == '${login.uid}') {
@@ -258,11 +240,13 @@
 
 	}
 
-	var bno = $
-	{
-		boardVO.bno
-	};
-
+	//var bno = ${boardVO.bno};
+//console.log("bno" +${bno});
+    //var bno = ${boardVO.bno};
+    //console.log("bno: " +bno);
+    var paramBno = ${param.bno};
+    console.log("paramBno: " +paramBno);
+    //getPage("/replies/" + bno + "/1");
 	var replyPage = 1;
 
 	function getPage(pageInfo) {
@@ -304,7 +288,7 @@
 		if ($(".timeline li").size() > 1) {
 			return;
 		}
-		getPage("/replies/" + bno + "/1");
+		
 
 	});
 
@@ -318,38 +302,7 @@
 
 	});
 
-	$("#replyAddBtn").on("click", function() {
-
-		var replyerObj = $("#newReplyWriter");
-		var replytextObj = $("#newReplyText");
-		var replyer = replyerObj.val();
-		var replytext = replytextObj.val();
-
-		$.ajax({
-			type : 'post',
-			url : '/replies/',
-			headers : {
-				"Content-Type" : "application/json",
-				"X-HTTP-Method-Override" : "POST"
-			},
-			dataType : 'text',
-			data : JSON.stringify({
-				bno : bno,
-				replyer : replyer,
-				replytext : replytext
-			}),
-			success : function(result) {
-				console.log("result: " + result);
-				if (result == 'SUCCESS') {
-					alert("등록 되었습니다.");
-					replyPage = 1;
-					getPage("/replies/" + bno + "/" + replyPage);
-					replyerObj.val("");
-					replytextObj.val("");
-				}
-			}
-		});
-	});
+	//////////////////////replyAddBtn   move/////////////////////
 
 	$(".timeline").on("click", ".replyLi", function(event) {
 
@@ -412,101 +365,132 @@
 
 
 <script>
-	$(document).ready(
-			function() {
+$(document).ready(function(){
+	
+	var formObj = $("form[role='form']");
+	
+	console.log(formObj);
+	
+	$("#modifyBtn").on("click", function(){
+		formObj.attr("action", "/sboard/modifyPage");
+		formObj.attr("method", "get");		
+		formObj.submit();
+	});
+	
+/* 	$("#removeBtn").on("click", function(){
+		formObj.attr("action", "/sboard/removePage");
+		formObj.submit();
+	}); */
 
-				var formObj = $("form[role='form']");
-
-				console.log(formObj);
-
-				$("#modifyBtn").on("click", function() {
-					formObj.attr("action", "/sboard/modifyPage");
-					formObj.attr("method", "get");
-					formObj.submit();
-				});
-
-				/*  $("#removeBtn").on("click", function(){
-				 formObj.attr("action", "/sboard/removePage");
-				 formObj.submit();
-				 }); */
-
-				$("#removeBtn").on("click", function() {
-
-					var replyCnt = $("#replycntSmall").html();
-
-					if (replyCnt > 0) {
-						alert("댓글이 달린 게시물을 삭제할 수 없습니다.");
-						return;
-					}
-
-					var arr = [];
-					$(".uploadedList li").each(function(index) {
-						arr.push($(this).attr("data-src"));
-					});
-
-					if (arr.length > 0) {
-						$.post("/deleteAllFiles", {
-							files : arr
-						}, function() {
-
-						});
-					}
-
-					formObj.attr("action", "/sboard/removePage");
-					formObj.submit();
-				});
-
-				$("#goListBtn ").on("click", function() {
-					formObj.attr("method", "get");
-					formObj.attr("action", "/sboard/list");
-					formObj.submit();
-				});
-
-				var bno = $
-				{
-					boardVO.bno
-				}
-				;
-				var template = Handlebars.compile($("#templateAttach").html());
-
-				$.getJSON("/sboard/getAttach/" + bno, function(list) {
-					$(list).each(function() {
-
-						var fileInfo = getFileInfo(this);
-
-						var html = template(fileInfo);
-
-						$(".uploadedList").append(html);
-
-					});
-				});
-
-				$(".uploadedList").on("click", ".mailbox-attachment-info a",
-						function(event) {
-
-							var fileLink = $(this).attr("href");
-
-							if (checkImageType(fileLink)) {
-
-								event.preventDefault();
-
-								var imgTag = $("#popup_img");
-								imgTag.attr("src", fileLink);
-
-								console.log(imgTag.attr("src"));
-
-								$(".popup").show('slow');
-								imgTag.addClass("show");
-							}
-						});
-
-				$("#popup_img").on("click", function() {
-
-					$(".popup").hide('slow');
-
-				});
-
+	
+	$("#removeBtn").on("click", function(){
+		
+		var replyCnt =  $("#replycntSmall").html();
+		
+		if(replyCnt > 0 ){
+			alert("댓글이 달린 게시물을 삭제할 수 없습니다.");
+			return;
+		}	
+		
+		var arr = [];
+		$(".uploadedList li").each(function(index){
+			 arr.push($(this).attr("data-src"));
+		});
+		
+		if(arr.length > 0){
+			$.post("/deleteAllFiles",{files:arr}, function(){
+				
 			});
+		}
+		
+		formObj.attr("action", "/sboard/removePage");
+		formObj.submit();
+	});	
+	
+	$("#goListBtn ").on("click", function(){
+		formObj.attr("method", "get");
+		formObj.attr("action", "/sboard/list");
+		formObj.submit();
+	});
+	
+	var bno = ${boardVO.bno};
+	var template = Handlebars.compile($("#templateAttach").html());
+	
+	$.getJSON("/sboard/getAttach/"+bno,function(list){
+		$(list).each(function(){
+			
+			var fileInfo = getFileInfo(this);
+			
+			var html = template(fileInfo);
+			
+			 $(".uploadedList").append(html);
+			
+		});
+		
+		
+		$("#replyAddBtn").on("click", function() {
+
+		    var replyerObj = $("#newReplyWriter");
+		    var replytextObj = $("#newReplyText");
+		    var replyer = replyerObj.val();
+		    var replytext = replytextObj.val();
+
+		    $.ajax({
+		      type : 'post',
+		      url : '/replies/',
+		      headers : {
+		        "Content-Type" : "application/json",
+		        "X-HTTP-Method-Override" : "POST"
+		      },
+		      dataType : 'text',
+		      data : JSON.stringify({
+		        bno : bno,
+		        replyer : replyer,
+		        replytext : replytext
+		      }),
+		      success : function(result) {
+		        console.log("result: " + result);
+		        if (result == 'SUCCESS') {
+		          alert("등록 되었습니다.");
+		          replyPage = 1;
+		          getPage("/replies/" + bno + "/" + replyPage);
+		          replyerObj.val("");
+		          replytextObj.val("");
+		        }
+		      }
+		    });
+		  });
+	});
+	
+
+
+	$(".uploadedList").on("click", ".mailbox-attachment-info a", function(event){
+		
+		var fileLink = $(this).attr("href");
+		
+		if(checkImageType(fileLink)){
+			
+			event.preventDefault();
+					
+			var imgTag = $("#popup_img");
+			imgTag.attr("src", fileLink);
+			
+			console.log(imgTag.attr("src"));
+					
+			$(".popup").show('slow');
+			imgTag.addClass("show");		
+		}	
+	});
+	
+	$("#popup_img").on("click", function(){
+		
+		$(".popup").hide('slow');
+		
+	});	
+	
+		
+	
+});
 </script>
 
 

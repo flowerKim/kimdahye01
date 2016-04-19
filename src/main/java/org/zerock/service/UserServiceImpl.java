@@ -17,9 +17,10 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserVO login(LoginDTO dto) throws Exception {
+
     return dao.login(dto);
   }
-
+  
   @Override
   public void keepLogin(String uid, String sessionId, Date next)
       throws Exception {

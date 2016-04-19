@@ -1,6 +1,12 @@
 grant all privileges on *.* to java72@localhost identified by 'java72'; 
 grant all privileges on *.* to java72 identified by 'java72'; 
 
+
+--247 page 데이터 넣기
+insert into tbl_board (title, content, writer)
+ (select title, content, writer from tbl_board);
+
+
 -- 370 page Ajax 댓글처리
 create table tbl_reply (
   rno int not null AUTO_INCREMENT,

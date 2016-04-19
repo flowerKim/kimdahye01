@@ -6,9 +6,13 @@ import org.zerock.domain.UserVO;
 import org.zerock.dto.LoginDTO;
 
 public interface UserDAO {
-  public UserVO login(LoginDTO dto)throws Exception;
+
+	public UserVO login(LoginDTO dto)throws Exception;
 
   public void keepLogin(String uid, String sessionId, Date next);
   
-  public UserVO checkUserWithSessionKey(String value);  
+  public UserVO checkUserWithSessionKey(String value);	
 }
+
+
+
