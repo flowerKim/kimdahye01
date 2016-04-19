@@ -130,7 +130,7 @@
 		<ul class="timeline">
 		  <!-- timeline time label -->
 		<li class="time-label" id="repliesDiv">
-		  <span class="bg-green" style="cursor:pointer">
+		  <span class="bg-green">
 		    Replies List <small id='replycntSmall'> [ ${boardVO.replycnt} ] </small>
 		    </span>
 		  </li>
@@ -210,6 +210,8 @@
 
 <script>
 function goLogin() {
+	 //document.cookie = name + "=dest" + expires + "; path=/";
+	 //http://stackoverflow.com/questions/2257631/how-create-a-session-using-javascript
 	 self.location = "/user/login";
 }
 
@@ -460,8 +462,10 @@ $(document).ready(function(){
 			
 		});
 		
-	        getPage("/replies/" + bno + "/" + 1);
-		
+		//댓글보이기
+      getPage("/replies/" + bno + "/" + 1);
+		<c:if test="${not empty login}">  
+		</c:if>
 		
 		/* 
 		$("#replyAddBtn").on("click", function() {

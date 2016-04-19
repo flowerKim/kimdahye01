@@ -29,7 +29,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
     if(session.getAttribute("login") == null){
     
-      logger.info("current user is not logined");
+      System.out.println("current user is not logined");
       
       saveDest(request);
       
@@ -39,7 +39,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         
         UserVO userVO = service.checkLoginBefore(loginCookie.getValue());
         
-        logger.info("USERVO: " + userVO);
+        System.out.println("USERVO: " + userVO);
         
         if(userVO != null){
           session.setAttribute("login", userVO);
@@ -68,7 +68,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     }
 
     if (req.getMethod().equals("GET")) {
-      logger.info("dest: " + (uri + query));
+      System.out.println("dest: " + (uri + query));
       req.getSession().setAttribute("dest", uri + query);
     }
   }

@@ -28,12 +28,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     if (userVO != null) {
 
-      logger.info("new login success");
+      System.out.println("new login success");
       session.setAttribute(LOGIN, userVO);
 
       if (request.getParameter("useCookie") != null) {
 
-        logger.info("remember me................");
+        System.out.println("remember me................");
         Cookie loginCookie = new Cookie("loginCookie", session.getId());
         loginCookie.setPath("/");
         loginCookie.setMaxAge(60 * 60 * 24 * 7);
@@ -41,8 +41,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
       }
       // response.sendRedirect("/");
       Object dest = session.getAttribute("dest");
-
+      System.out.println("session.getAttribute--->" + dest);
       response.sendRedirect(dest != null ? (String) dest : "/");
+      
     }
   }
 
@@ -74,7 +75,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     HttpSession session = request.getSession();
 
     if (session.getAttribute(LOGIN) != null) {
-      logger.info("clear login data before");
+      System.out.println("clear login data before");
       session.removeAttribute(LOGIN);
     }
 
